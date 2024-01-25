@@ -12,11 +12,9 @@ import { Button, Checkbox, TextInput } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 
 const FormLogin = () => {
-  // const [email, setEmail] = useState("");
-  // const [pass, setPass] = useState("");
   const [show, setshow] = useState(true);
   const [icon, setIcon] = useState("eye");
-  const [checked, setChecked] = useState(false);
+  const [error, setError] = useState([]);
 
   const {
     control,
@@ -32,16 +30,69 @@ const FormLogin = () => {
     setIcon("eye-off");
   }, [show]);
 
+  useEffect(() => {
+    if (error.length > 0) {
+      const timer = setTimeout(() => {
+        setError([]);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
   const ishowm = () => {
     setshow(!show);
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    fetch("http://192.168.1.14:456/api/login", requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          return response.json().then((result) => {
+            console.log("Successful response:", result);
+          });
+        } else {
+          return response.json().then((error) => {
+            setError(error.message);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Network error:", error);
+      });
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      {error.length !== 0 ? (
+        <View
+          style={{
+            backgroundColor: "rgba(255, 53, 53, 0.57)",
+            paddingVertical: 10,
+            borderRadius: 5,
+            marginTop: 10,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              color: "#FFF",
+              fontSize: 15,
+              fontWeight: 700,
+            }}
+          >
+            {error}
+          </Text>
+        </View>
+      ) : null}
+
       <ScrollView>
         <Text style={{ color: "red", marginBottom: 5, textAlign: "left" }}>
           {errors.Email ? errors.Email.message : null}
@@ -55,7 +106,7 @@ const FormLogin = () => {
               message: "Ingrese El correo electronico",
             },
             pattern: {
-              value: "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/",
+              value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
               message: "Correo invalido",
             },
           }}
@@ -101,7 +152,7 @@ const FormLogin = () => {
           )}
         />
 
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        {/* <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Checkbox
             status={checked ? "checked" : "unchecked"}
             onPress={() => {
@@ -111,10 +162,10 @@ const FormLogin = () => {
           <Text style={{ color: "#3E3049", fontSize: 15 }}>
             Mantener la sesión Iniciada
           </Text>
-        </View>
+        </View> */}
 
         <Button
-          style={{ marginTop: 10 }}
+          style={{ marginTop: 40 }}
           mode="contained"
           onPress={handleSubmit(onSubmit)}
         >
@@ -152,7 +203,7 @@ const FormLogin = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 10,
     flex: 1,
     paddingTop: StatusBar.currentHeight,
   },

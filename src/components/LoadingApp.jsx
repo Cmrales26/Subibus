@@ -28,7 +28,7 @@ const LoadingApp = ({ progress, setProgress, navigation }) => {
     const FirstLoginData = async () => {
       const value = await AsyncStorage.getItem("FirstUse");
       if (value !== null) {
-        navigation.navigate("Login");
+        navigation.replace("Login");
         return;
       }
       navigation.replace("Welcome");
