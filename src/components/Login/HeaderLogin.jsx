@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, Image, StyleSheet} from "react-native";
 
 const HeaderLogin = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../../assets/Icon.png")}
+        source={require("../../../assets/icon.png")}
         style={styles.image}
       />
       <Text style={styles.text}>SUBIBUS</Text>

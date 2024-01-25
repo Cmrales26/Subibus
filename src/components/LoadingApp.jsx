@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image } from "react-native";
-import Icon from "../../assets/Icon.png";
+import Icon from "../../assets/icon.png";
 import React, { useEffect } from "react";
 import { ProgressBar } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
