@@ -8,13 +8,18 @@ import {
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, TextInput } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../context/AuthContext";
 
 const FormLogin = () => {
   const [show, setshow] = useState(true);
   const [icon, setIcon] = useState("eye");
-  const [error, setError] = useState([]);
+  const { Login, error } = useAuth();
+
+  const navigation = useNavigation();
 
   const {
     control,
@@ -30,43 +35,16 @@ const FormLogin = () => {
     setIcon("eye-off");
   }, [show]);
 
-  useEffect(() => {
-    if (error.length > 0) {
-      const timer = setTimeout(() => {
-        setError([]);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [error]);
-
   const ishowm = () => {
     setshow(!show);
   };
 
-  const onSubmit = (data) => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-
-    fetch("http://192.168.1.14:456/api/login", requestOptions)
-      .then((response) => {
-        if (response.ok) {
-          return response.json().then((result) => {
-            console.log("Successful response:", result);
-          });
-        } else {
-          return response.json().then((error) => {
-            setError(error.message);
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Network error:", error);
-      });
+  const onSubmit = async (data) => {
+    const res = await Login(data);
+    if (res !== undefined) {
+      await AsyncStorage.setItem("Token", res.token);
+      navigation.replace("Home");
+    }
   };
 
   return (

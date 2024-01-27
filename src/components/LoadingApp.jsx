@@ -25,15 +25,20 @@ const LoadingApp = ({ progress, setProgress, navigation }) => {
       return;
     }
 
-    const FirstLoginData = async () => {
+    const PostLoadingAction = async () => {
       const value = await AsyncStorage.getItem("FirstUse");
+      const token = await AsyncStorage.getItem("Token");
       if (value !== null) {
+        if (token !== null) {
+          navigation.replace("Home");
+          return;
+        }
         navigation.replace("Login");
         return;
       }
       navigation.replace("Welcome");
     };
-    FirstLoginData();
+    PostLoadingAction();
   }, [progress]);
 
   return (
