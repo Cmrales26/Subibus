@@ -15,6 +15,8 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+  const APIADRESS = `http://192.168.1.18:456/api`;
+
   const [user, setUser] = useState({});
   const [isauth, setIsAuth] = useState(false);
   const [loading, setisLoading] = useState(true);
@@ -41,10 +43,7 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ token: token }),
       };
       try {
-        const res = await fetch(
-          "http://192.168.1.14:456/api/ChekLogin",
-          requestOptions
-        );
+        const res = await fetch(`${APIADRESS}/ChekLogin`, requestOptions);
         if (res.ok) {
           const result = await res.json();
           setIsAuth(true);
@@ -71,10 +70,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     try {
-      const response = await fetch(
-        "http://192.168.1.14:456/api/login",
-        requestOptions
-      );
+      const response = await fetch(`${APIADRESS}/login`, requestOptions);
 
       if (response.ok) {
         const result = await response.json();

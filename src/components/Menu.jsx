@@ -13,8 +13,17 @@ const Menu = () => {
     <NavigationContainer independent={true}>
       <Tab.Navigator
         screenOptions={{
-          activeTintColor: "#6648AF",
+          tabBarActiveTintColor: "#6648AF",
           inactiveTintColor: "gray",
+          tabBarStyle: {
+            height: 60,
+          },
+          tabBarIconStyle: {
+            marginTop: 10,
+          },
+          tabBarLabelStyle: {
+            paddingBottom: 10,
+          },
         }}
       >
         <Tab.Screen
@@ -29,21 +38,22 @@ const Menu = () => {
         />
 
         <Tab.Screen
-          name="Perfil"
-          component={Profile}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Octicons name="person" size={size} color={color} />
-            ),
-            headerShown: false,
-          }}
-        />
-        <Tab.Screen
           name="Pagar"
           component={Pay}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Octicons name="note" size={size} color={color} />
+            ),
+            headerShown: false,
+          }}
+        />
+
+        <Tab.Screen
+          name="Perfil"
+          component={Profile}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Octicons name="person" size={size} color={color} />
             ),
             headerShown: false,
           }}

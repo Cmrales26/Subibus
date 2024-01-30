@@ -6,7 +6,7 @@ import { Button } from "react-native-paper";
 // import { useNavigation } from "@react-navigation/native";
 
 const Profile = ({ navigation }) => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
 
   const logoutHandler = () => {
     logout();

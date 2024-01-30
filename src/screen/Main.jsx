@@ -3,7 +3,7 @@ import React from "react";
 import Menu from "../components/Menu";
 
 const NavMenu = () => {
-  return <Menu></Menu>;
+  return <Menu />;
 };
 
 export default NavMenu;
