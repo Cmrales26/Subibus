@@ -2,14 +2,14 @@
 import LoadingApp from "../src/components/LoadingApp";
 import Welcome from "../src/components/Welcome";
 import { useState } from "react";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "../src/screen/Login";
-import Main from "../src/screen/Main";
 import Profile from "../src/screen/Profile";
+import Recharge from "../src/screen/Recharge";
 import { useAuth } from "./context/AuthContext";
-
-// ... Resto de tus importaciones ...
+import Home from "./screen/Home";
+import Pay from "./screen/Pay";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,12 +40,25 @@ const AppNavigator = () => {
             <Stack.Screen
               options={{ headerShown: false }}
               name="Home"
-              component={Main}
+              component={Home}
             />
+
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Pay"
+              component={Pay}
+            />
+
             <Stack.Screen
               options={{ headerShown: false }}
               name="Profile"
               component={Profile}
+            />
+
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Recharge"
+              component={Recharge}
             />
           </>
         ) : (

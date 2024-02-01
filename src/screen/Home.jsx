@@ -6,8 +6,10 @@ import Cards from "../components/home/Cards";
 import { useAuth } from "../context/AuthContext";
 import RefSis from "../components/home/RefSis";
 import Options from "../components/home/Options";
+import FooterNav from "../components/FooterNav";
+import { Text, Button } from "react-native-paper";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const { loading } = useAuth();
   if (loading) {
     return (
@@ -22,6 +24,7 @@ const Home = () => {
       <Cards />
       <RefSis />
       <Options />
+      <FooterNav CurrentView={"Home"} />
     </SafeAreaView>
   );
 };

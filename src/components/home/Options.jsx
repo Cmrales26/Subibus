@@ -1,14 +1,18 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import Octicons from "@expo/vector-icons/Octicons";
 import MtcIcon from "@expo/vector-icons/MaterialCommunityIcons";
 import MtIcon from "@expo/vector-icons/MaterialIcons";
 import FA5 from "@expo/vector-icons/FontAwesome5";
+import { useNavigation } from "@react-navigation/native";
 const Options = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.optioncontainer}>
-        <TouchableOpacity style={{ alignItems: "center" }}>
+        <TouchableOpacity
+          style={{ alignItems: "center" }}
+          onPress={() => navigation.navigate("Recharge")}
+        >
           <MtIcon
             style={{ backgroundColor: "#FFF", padding: 10, borderRadius: 15 }}
             name="attach-money"
